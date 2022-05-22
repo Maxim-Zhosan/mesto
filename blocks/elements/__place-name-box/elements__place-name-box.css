@@ -1,0 +1,7 @@
+.elements__place-name-box {
+    width: 241px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 25px;
+}

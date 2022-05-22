@@ -1,0 +1,10 @@
+.elements__heart-icon {
+    width: 22px;
+    height: 19px;
+    transition: ease-in 0.2s;
+    cursor: pointer;
+}
+
+.elements__heart-icon:hover {
+    opacity: 0.5;
+}

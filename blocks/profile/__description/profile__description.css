@@ -1,0 +1,16 @@
+.profile__description {
+    max-width: max-content;
+    font-weight: 400;
+    font-size  : 18px;
+    line-height: 22px;
+    color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 710px) {
+    .profile__description {
+        font-size: 14px;
+        line-height: 17px;
+    }
+}
