@@ -5,6 +5,7 @@
     cursor      : pointer;
     background  : url('../../../images/heart-empty.svg');
     border-style: none;
+    padding: 0;
 }
 
 .elements__heart-icon:hover {
