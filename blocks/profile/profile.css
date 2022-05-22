@@ -45,13 +45,13 @@
         width          : 70%;
         align-items    : center;
         justify-content: center;
-        padding         : 42px 19px 36px;
-        margin: auto;
+        padding        : 42px 19px 36px;
+        margin         : auto;
     }
 }
 
 @media (max-width: 591px) {
     .profile {
-        width          : 60%;
+        width: 60%;
     }
 }

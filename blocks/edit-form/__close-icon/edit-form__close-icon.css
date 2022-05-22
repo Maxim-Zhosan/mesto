@@ -16,7 +16,7 @@
 
 @media (max-width: 591px) {
     .edit-form__close-icon {
-        background-image: url('../../../images/close-icon-small.svg');
+        background-size: cover;
         width: 20px;
         height: 20px;
         top: -36px;

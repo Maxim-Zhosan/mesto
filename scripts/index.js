@@ -7,31 +7,40 @@ const closeEditForm = document.querySelector('.edit-form__close-icon');
 const editFormName = document.querySelector('.edit-form__input_type_name');
 const editFormJob = document.querySelector('.edit-form__input_type_job');
 
-function openClosePopup(popupElement) {
+function openPopup(popupElement) {
     editFormName.value = profileName.textContent
     editFormJob.value = profileDescription.textContent
-    popupElement.classList.toggle('edit-form_isOpen')
+    popupElement.classList.add('edit-form_type_open')
 };
+
+function closePopup(popupElement) {
+    popupElement.classList.remove('edit-form_type_open')
+};
+
+function preventDef(event) {
+    event.preventDefault()
+}
 
 function closeWithSave(popupElement) {
     profileName.textContent = editFormName.value
     profileDescription.textContent = editFormJob.value
-    popupElement.classList.toggle('edit-form_isOpen')
+    popupElement.classList.remove('edit-form_type_open')
 };
 
-function detectClickOutside(event) {
-    if (event.target.classList.contains('edit-form')) {
-        openClosePopup(editForm)
-    }
-}
+// function detectClickOutside(event) {
+//     if (event.target.classList.contains('edit-form')) {
+//         openPopup(editForm)
+//     }
+// }
 
-profileEditButton.addEventListener('click', () => openClosePopup(editForm));
-closeEditForm.addEventListener('click', () => closeWithSave(editForm));
-formElement.addEventListener('submit', function(event) {
-    event.preventDefault()
+profileEditButton.addEventListener('click', () => openPopup(editForm));
+closeEditForm.addEventListener('click', () => closePopup(editForm));
+formElement.addEventListener('submit', () => {
+    preventDef(event); 
     closeWithSave(editForm)
 });
-document.body.addEventListener('click', function(event) {
-    detectClickOutside(event)});
+
+// document.body.addEventListener('click', function(event) {
+//     detectClickOutside(event)});
 
 
