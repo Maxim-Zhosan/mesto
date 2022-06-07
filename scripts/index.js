@@ -26,7 +26,7 @@ const addFormLink = document.querySelector('.popup__input_type_link');
 function openProfilePopup(popupElement) {
     editFormName.value = profileName.textContent;
     editFormJob.value = profileDescription.textContent;
-    popupElement.classList.add('popup_opened');
+    openPopup(popupElement);
 };
 
 function openPopup(popupElement) {
@@ -44,7 +44,7 @@ function formSubmitProfileHandler(event) {
     profileName.textContent = editFormName.value;
     profileDescription.textContent = editFormJob.value;
     popupFormProfile.reset();
-    handleClosePopup(event);
+    closePopup(popupProfile);
 };
 
 //Добавление новой карточки
@@ -53,7 +53,7 @@ function formSubmitNewCardHandler(event) {
     const newElement = {name: addFormName.value, link: addFormLink.value};
     addElement(newElement);
     popupFormNewCard.reset();
-    handleClosePopup(event);
+    closePopup(popupPlace);
 };
 
 //Добавление карточек "из коробки"
