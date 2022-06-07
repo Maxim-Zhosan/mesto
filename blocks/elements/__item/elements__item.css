@@ -9,5 +9,6 @@
     border-radius: 10px;
     overflow: hidden;
     align-items: center;
+    position: relative;
   }
   
