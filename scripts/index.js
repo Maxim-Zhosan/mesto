@@ -38,9 +38,11 @@ function openPopup(popupElement) {
 function closePopup(popupElement) {
     popupElement.classList.remove('popup_opened');
     document.removeEventListener('keydown', (event) => escCheck(event, popupElement));
+    popupFormNewCard.reset();
+    popupFormProfile.reset();
 };
 
-const escCheck = (event, popupElement) => {
+function escCheck(event, popupElement) {
     if (event.key === "Escape") {
         console.log('esc');
         return closePopup(popupElement);
@@ -116,7 +118,7 @@ initialCards.forEach(addElement);
 profileEditButton.addEventListener('click', () => openProfilePopup(popupProfile));
 cardAddButton.addEventListener('click', () => openPopup(popupPlace));
 popupCloseIcon.forEach((event) => event.addEventListener('click', handleClosePopup));
-document.addEventListener('click', (event) => detectClickOutside(event));
+document.addEventListener('mousedown', (event) => detectClickOutside(event));
 
 
 //Редактирование информации по профилю
