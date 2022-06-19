@@ -8,7 +8,8 @@ const popupPlace = document.querySelector('.popup_type_place');
 const popupZoom = document.querySelector('.popup_type_zoom');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const cardAddButton = document.querySelector('.profile__add-button');
-const popupImage = document.querySelector('.popup__image')
+const ElementsImage = document.querySelector('.elements__image');
+const popupImage = document.querySelector('.popup__image');
 const popupCaption = document.querySelector('.popup__caption');
 const popupCloseIcon = document.querySelectorAll('.popup__close-icon');
 const popupFormProfile = document.querySelector('.popup__form_type_profile');
@@ -31,12 +32,30 @@ function openProfilePopup(popupElement) {
 
 function openPopup(popupElement) {
     popupElement.classList.add('popup_opened');
+    document.addEventListener('keydown', (event) => escCheck(event, popupElement));
 };
 
 function closePopup(popupElement) {
     popupElement.classList.remove('popup_opened');
-}
-const handleClosePopup = (event) => closePopup(event.currentTarget.closest('.popup'));
+    document.removeEventListener('keydown', (event) => escCheck(event, popupElement));
+};
+
+const escCheck = (event, popupElement) => {
+    if (event.key === "Escape") {
+        console.log('esc');
+        return closePopup(popupElement);
+    }
+};
+
+const handleClosePopup = (event) => closePopup(event.target.closest('.popup'));
+
+// Закрытие поп-апа при щелке на оверлей
+
+function detectClickOutside(event) {
+    if (event.target.classList.contains('popup_opened')) {
+        handleClosePopup(event)
+    }
+};
 
 //Редактирование информации по профилю
 function formSubmitProfileHandler(event) {
@@ -96,14 +115,29 @@ initialCards.forEach(addElement);
 //Открытие/Закрытие попапа
 profileEditButton.addEventListener('click', () => openProfilePopup(popupProfile));
 cardAddButton.addEventListener('click', () => openPopup(popupPlace));
-popupImage.addEventListener('click', () => openPopup(popupZoom));
 popupCloseIcon.forEach((event) => event.addEventListener('click', handleClosePopup));
+document.addEventListener('click', (event) => detectClickOutside(event));
+
 
 //Редактирование информации по профилю
 popupFormProfile.addEventListener('submit', () => formSubmitProfileHandler(event));
 
 //Добавление новой карточки
 popupFormNewCard.addEventListener('submit', () => formSubmitNewCardHandler(event));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -129,13 +163,5 @@ popupFormNewCard.addEventListener('submit', () => formSubmitNewCardHandler(event
 //     }
 // }
 
-// Закртыие поп-апа при щелке на оверлей
 
-// function detectClickOutside(event) {
-//     if (event.target.classList.contains('edit-form')) {
-//         closePopup(editForm)
-//     }
-// }
 
-// document.body.addEventListener('click', function(event) {
-//     detectClickOutside(event)});
