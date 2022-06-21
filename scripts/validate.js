@@ -56,14 +56,14 @@ const checkInputValidity = (formElement, inputElement) => {
 };
 
 const showInputError = (formElement, inputElement, errorMessage) => {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
     inputElement.classList.add(`${par.inputErrorClass}`);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(`${par.errorClass}`);
 };
 
 const hideInputError = (formElement, inputElement) => {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
     inputElement.classList.remove(`${par.inputErrorClass}`);
     errorElement.classList.remove(`${par.errorClass}`);
     errorElement.textContent = '';
