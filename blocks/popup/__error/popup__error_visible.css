@@ -2,13 +2,4 @@
     font-size  : 12px;
     line-height: 15px;
     color: #FF0000;
-    margin-top: -25px;
-}
-
-.popup__error_visible:first-of-type {
-    margin: -26px 0 13px 0;
-}
-
-.popup__error_visible:last-of-type {
-    margin: -44px 0 31px 0;
 }

@@ -7,14 +7,9 @@ const par = {
     errorClass: 'popup__error_visible'
 }
 
-const enableValidation = () => {
+function enableValidation() {
     const formList = Array.from(document.querySelectorAll(`${par.formSelector}`));
-    formList.forEach((formElement) => {
-        formElement.addEventListener('submit', function (evt) {
-            evt.preventDefault();
-        });
-        setEventListeners(formElement);
-    });
+    formList.forEach((formElement) => setEventListeners(formElement));
 };
 
 const setEventListeners = (formElement) => {
@@ -69,4 +64,4 @@ const hideInputError = (formElement, inputElement) => {
     errorElement.textContent = '';
 };
 
-enableValidation(par); 
+enableValidation(); 

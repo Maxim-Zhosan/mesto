@@ -11,7 +11,7 @@ const cardAddButton = document.querySelector('.profile__add-button');
 const ElementsImage = document.querySelector('.elements__image');
 const popupImage = document.querySelector('.popup__image');
 const popupCaption = document.querySelector('.popup__caption');
-const popupCloseIcon = document.querySelectorAll('.popup__close-icon');
+const popupCloseIcons = document.querySelectorAll('.popup__close-icon');
 const popupFormProfile = document.querySelector('.popup__form_type_profile');
 const popupFormNewCard = document.querySelector('.popup__form_type_new-card');
 const editFormName = document.querySelector('.popup__input_type_name');
@@ -32,22 +32,22 @@ function openProfilePopup(popupElement) {
 
 function openPopup(popupElement) {
     popupElement.classList.add('popup_opened');
-    document.addEventListener('keydown', (event) => escCheck(event, popupElement));
+    document.addEventListener('keydown', escCheck);
 };
 
 function closePopup(popupElement) {
     popupElement.classList.remove('popup_opened');
-    document.removeEventListener('keydown', (event) => escCheck(event, popupElement));
-    popupFormNewCard.reset();
-    popupFormProfile.reset();
+    document.removeEventListener('keydown', escCheck);
 };
 
-function escCheck(event, popupElement) {
+function escCheck(event) {
+    const popupElementOpened = document.querySelector('.popup_opened');
     if (event.key === "Escape") {
-        console.log('esc');
-        return closePopup(popupElement);
+        closePopup(popupElementOpened);
     }
 };
+
+// Закрытие поп-апа по щелчку на крестик
 
 const handleClosePopup = (event) => closePopup(event.target.closest('.popup'));
 
@@ -55,7 +55,7 @@ const handleClosePopup = (event) => closePopup(event.target.closest('.popup'));
 
 function detectClickOutside(event) {
     if (event.target.classList.contains('popup_opened')) {
-        handleClosePopup(event)
+        closePopup(event.target);
     }
 };
 
@@ -64,7 +64,6 @@ function formSubmitProfileHandler(event) {
     event.preventDefault();
     profileName.textContent = editFormName.value;
     profileDescription.textContent = editFormJob.value;
-    popupFormProfile.reset();
     closePopup(popupProfile);
 };
 
@@ -72,6 +71,8 @@ function formSubmitProfileHandler(event) {
 function formSubmitNewCardHandler(event) {
     event.preventDefault();
     const newElement = {name: addFormName.value, link: addFormLink.value};
+    const formButton = event.target.querySelector('.popup__button');
+    formButton.classList.add('popup__button_disabled');
     addElement(newElement);
     popupFormNewCard.reset();
     closePopup(popupPlace);
@@ -83,8 +84,9 @@ const createElement = object => {
         .querySelector('.elements__item')
         .cloneNode(true);
     elementContent.querySelector('.elements__place-name').textContent = object.name;
-    elementContent.querySelector('.elements__image').src = object.link;
-    elementContent.querySelector('.elements__image').alt = object.name;
+    const elementImage = elementContent.querySelector('.elements__image');
+    elementImage.src = object.link;
+    elementImage.alt = object.name;
     //Удаление карточки
     const handleDeleteCard = event => {
         const elementItem = getClosestItem(event);
@@ -117,15 +119,15 @@ initialCards.forEach(addElement);
 //Открытие/Закрытие попапа
 profileEditButton.addEventListener('click', () => openProfilePopup(popupProfile));
 cardAddButton.addEventListener('click', () => openPopup(popupPlace));
-popupCloseIcon.forEach((event) => event.addEventListener('click', handleClosePopup));
+popupCloseIcons.forEach((event) => event.addEventListener('click', handleClosePopup));
 document.addEventListener('mousedown', (event) => detectClickOutside(event));
 
 
 //Редактирование информации по профилю
-popupFormProfile.addEventListener('submit', () => formSubmitProfileHandler(event));
+popupFormProfile.addEventListener('submit', formSubmitProfileHandler);
 
 //Добавление новой карточки
-popupFormNewCard.addEventListener('submit', () => formSubmitNewCardHandler(event));
+popupFormNewCard.addEventListener('submit', formSubmitNewCardHandler);
 
 
 
