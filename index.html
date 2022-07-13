@@ -32,14 +32,16 @@
       <section class="elements">
       </section>
 
-      
+
       <div class="popup popup_type_profile">
         <div class="popup__content">
           <h3 class="popup__title">Редактировать профиль</h3>
           <form class="popup__form popup__form_type_profile" action="/" name="profile-info" novalidate>
-            <input type="text" id="popup__input_type_name" class="popup__input popup__input_type_name" name="profile-name" placeholder="Имя" required minlength="2" maxlength="40">
+            <input type="text" id="popup__input_type_name" class="popup__input popup__input_type_name"
+              name="profile-name" placeholder="Имя" required minlength="2" maxlength="40">
             <span id="popup__input_type_name-error" class="popup__error"></span>
-            <input type="text" id="popup__input_type_job" class="popup__input popup__input_type_job" name="profile-job" placeholder="Призвание" required minlength="2" maxlength="200">
+            <input type="text" id="popup__input_type_job" class="popup__input popup__input_type_job" name="profile-job"
+              placeholder="Призвание" required minlength="2" maxlength="200">
             <span id="popup__input_type_job-error" class="popup__error"></span>
             <button type="submit" class="popup__button">Сохранить</button>
           </form>
@@ -51,12 +53,12 @@
         <div class="popup__content">
           <h3 class="popup__title">Новое место</h3>
           <form class="popup__form popup__form_type_new-card" action="/" name="place-info" novalidate>
-            <input type="text" id="popup__input_type_place" class="popup__input popup__input_type_place" name="place-name"
-              placeholder="Название" required minlength="2" maxlength="30">
-              <span id="popup__input_type_place-error" class="popup__error"></span>
+            <input type="text" id="popup__input_type_place" class="popup__input popup__input_type_place"
+              name="place-name" placeholder="Название" required minlength="2" maxlength="30">
+            <span id="popup__input_type_place-error" class="popup__error"></span>
             <input type="url" id="popup__input_type_link" class="popup__input popup__input_type_link" name="place-link"
               placeholder="Ссылка на картинку" required>
-              <span id="popup__input_type_link-error" class="popup__error"></span>
+            <span id="popup__input_type_link-error" class="popup__error"></span>
             <button type="submit" class="popup__button">Сохранить</button>
           </form>
           <button class="popup__close-icon" type="button" aria-label="Закрыть"></button>
@@ -91,9 +93,10 @@
       <button class="elements__delete-icon" type="button" aria-label="Удалить"></button>
     </article>
   </template>
-  <script src="./scripts/cards.js"></script>
-  <script src="./scripts/index.js"></script>
-  <script src="./scripts/validate.js"></script>
+  <script src="./scripts/initialCards.js" type="module"></script>
+  <script src="./scripts/index.js" type="module"></script>
+  <script src="./scripts/Card.js" type="module"></script>
+  <script src="./scripts/FormValidator.js" type="module"></script>
 
 </body>
 
