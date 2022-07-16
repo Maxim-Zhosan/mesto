@@ -33,6 +33,7 @@ const cardPopup = document.querySelector(configCard.cardPopup);
 const popupImage = document.querySelector(configCard.popupImage);
 const popupCaption = document.querySelector(configCard.popupCaption);
 const popupCloseIcons = document.querySelectorAll(configCard.popupCloseIcons);
+const cardList = document.querySelector(configCard.cardList);
 
 const popupProfile = document.querySelector('.popup_type_profile');
 const popupPlace = document.querySelector('.popup_type_place');
@@ -53,19 +54,21 @@ const cardLinkInput = document.querySelector('.popup__input_type_link');
 function openPopup(popupElement) {
     popupElement.classList.add('popup_opened');
     document.addEventListener('keydown', checkEsc);
-    document.addEventListener('mousedown', (event) => detectClickOutside(event));
+    popupElement.addEventListener('mousedown', (event) => detectClickOutside(event));
 };
 
 function closePopup(popupElement) {
     popupElement.classList.remove('popup_opened');
     document.removeEventListener('keydown', checkEsc);
-    document.removeEventListener('mousedown', (event) => detectClickOutside(event));
+    popupElement.removeEventListener('mousedown', (event) => detectClickOutside(event));
+    newCardValidation.resetValidation();
+    profileValidation.resetValidation();
 };
 
 // - Закрытие поп-апа по нажатию на ESC
 function checkEsc(event) {
-    const popupElementOpened = document.querySelector('.popup_opened');
     if (event.key === "Escape") {
+        const popupElementOpened = document.querySelector('.popup_opened');
         closePopup(popupElementOpened);
     }
 };
@@ -112,6 +115,12 @@ function createPopup(name, link) {
     openPopup(cardPopup);
 }
 
+//Валидация форм
+const profileValidation = new FormValidator(configValid, popupFormProfile);
+const newCardValidation = new FormValidator(configValid, popupFormNewCard);
+profileValidation.enableValidation();
+newCardValidation.enableValidation();  
+
 //Создание карточки
 function createCard(item) {
     const card = new Card(item, configCard, createPopup);
@@ -120,27 +129,11 @@ function createCard(item) {
 
 //Добавление карточки
 function addCard(card) {
-document.querySelector(configCard.cardList)
-        .prepend(card.createCard())
+    cardList.prepend(card.createCard())
 }
 
 //Наполнение карточками из массива
 initialCards.forEach(item => createCard(item));
-
-//Валидация форм
-// Оставил здесь как было, чтобы 
-// при добавлении новой формы не надо было её прописывать, 
-// как в случае отдельных функций, как предлагалось:
-// const profileValidation = new FormValidator(selectors, formEditProfile);
-// const newCardValidation = new FormValidator(selectors, formAddCard);
-// profileValidation.enableValidation();
-// newCardValidation.enableValidation();  
-// деактивацию кнопки сабмита сделал через this._formElement.checkValidity();
-const formList = document.querySelectorAll(configValid.formSelector);
-formList.forEach(formElement => {
-    const form = new FormValidator(configValid, formElement);
-    form.enableValidation();
-})
 
 
 //ОБРАБОТЧИКИ
