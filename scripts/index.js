@@ -54,15 +54,13 @@ const cardLinkInput = document.querySelector('.popup__input_type_link');
 function openPopup(popupElement) {
     popupElement.classList.add('popup_opened');
     document.addEventListener('keydown', checkEsc);
-    popupElement.addEventListener('mousedown', (event) => detectClickOutside(event));
+    popupElement.addEventListener('mousedown', detectClickOutside);
 };
 
 function closePopup(popupElement) {
     popupElement.classList.remove('popup_opened');
     document.removeEventListener('keydown', checkEsc);
-    popupElement.removeEventListener('mousedown', (event) => detectClickOutside(event));
-    newCardValidation.resetValidation();
-    profileValidation.resetValidation();
+    popupElement.removeEventListener('mousedown', detectClickOutside);
 };
 
 // - Закрытие поп-апа по нажатию на ESC
@@ -87,6 +85,13 @@ function detectClickOutside(event) {
 function openProfilePopup(popupElement) {
     profileNameInput.value = profileName.textContent;
     profileJobInput.value = profileDescription.textContent;
+    profileValidation.resetValidation();
+    openPopup(popupElement);
+};
+
+//Открытие/Закрытие попапа карточки
+function openNewCardPopup(popupElement) {
+    newCardValidation.resetValidation();
     openPopup(popupElement);
 };
 
@@ -140,7 +145,7 @@ initialCards.forEach(item => createCard(item));
 
 //Открытие/Закрытие попапа
 profileEditButton.addEventListener('click', () => openProfilePopup(popupProfile));
-cardAddButton.addEventListener('click', () => openPopup(popupPlace));
+cardAddButton.addEventListener('click', () => openNewCardPopup(popupPlace));
 popupCloseIcons.forEach((event) => event.addEventListener('click', handleClosePopup));
 
 //Редактирование информации по профилю
@@ -148,7 +153,6 @@ popupFormProfile.addEventListener('submit', handleProfileFormSubmit);
 
 //Добавление новой карточки
 popupFormNewCard.addEventListener('submit', handleNewCardFormSubmit);
-
 
 
 
