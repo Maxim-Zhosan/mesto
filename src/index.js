@@ -79,15 +79,15 @@ function handleCardClick(data) {
 };
 
 //Создание карточки
+function createNew(item) {
 const card = new Card(configCard, handleCardClick);
-const newCard = (item) => {
 return card.createCard(item);
 }
 
 //Добавление карточек из коробки
 const initialObjects = {
     items: initialCards,
-    renderer: newCard
+    renderer: createNew
 }
 const section = new Section(initialObjects, cardList);
 section.renderer();
@@ -103,7 +103,7 @@ function openNewCardPopup() {
 
 //Добавление новой карточки из формы
 function addCard(item){
-    section.addItem(newCard(item));
+    section.addItem(createNew(item)); 
 }
 
 //ОБРАБОТЧИКИ
