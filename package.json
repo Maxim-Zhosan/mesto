@@ -1,0 +1,25 @@
+{
+  "name": "mesto",
+  "version": "0.0.1",
+  "description": "### Практика адаптивной вёрстки и первых шагов в JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack serve --mode development --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maxim-Zhosan/mesto.git"
+  },
+  "author": "Maxim Zhosan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Maxim-Zhosan/mesto/issues"
+  },
+  "homepage": "https://github.com/Maxim-Zhosan/mesto#readme",
+  "devDependencies": {
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.9.3"
+  }
+}

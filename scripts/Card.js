@@ -1,7 +1,5 @@
 class Card {
-    constructor(item, configCard, cardPopupData) {
-        this._name = item.name,
-        this._link = item.link,
+    constructor(configCard, cardPopupData) {
         this._config = configCard,
         this._cardPopupData = cardPopupData
     }
@@ -17,7 +15,7 @@ class Card {
             .addEventListener('click', this._deleteCard.bind(this));
         this._likeButton = this._view.querySelector(this._config.cardLikeButton);
         this._likeButton.addEventListener('click', this._like.bind(this));
-        this._cardImage.addEventListener('click', () => this._cardPopupData(this._name, this._link));
+        this._cardImage.addEventListener('click', () => this._cardPopupData({name: this._cardImage.alt, link: this._cardImage.src}));
     }
 
     _deleteCard() {
@@ -28,13 +26,13 @@ class Card {
         this._likeButton.classList.toggle(this._config.cardIsLiked);
     }
 
-    createCard() {
+    createCard(item) {
         this._view = this._getTemplate();
         this._cardName = this._view.querySelector(this._config.cardName); 
-        this._cardName.textContent = this._name; 
+        this._cardName.textContent = item.name; 
         this._cardImage = this._view.querySelector(this._config.cardImage);
-        this._cardImage.src = this._link;
-        this._cardImage.alt = this._name;
+        this._cardImage.src = item.link;
+        this._cardImage.alt = item.name;
         this._addEventListeners();
         return this._view;
     }
