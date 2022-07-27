@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Место</title>
-  <link rel="stylesheet" href="./pages/index.css">
 </head>
 
 <body class="body">
@@ -14,13 +13,13 @@
   <div class="page">
 
     <header class="header">
-      <img src="./images/header-logo.svg" alt="Лого" class="header__logo">
-    </header>
+      <img src="<%=require('../images/header-logo.svg')%>" alt="Лого" class="header__logo">
+    </header>  
 
     <main class="content">
 
       <section class="profile">
-        <div class="profile__avatar" style="background-image: url('./images/avatar.jpg');"></div>
+        <div class="profile__avatar" style="background-image: url(<%=require('../images/avatar.jpg')%>);"></div>
         <div class="profile__profile-info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <p class="profile__description">Исследователь океана</p>
@@ -93,7 +92,6 @@
       <button class="elements__delete-icon" type="button" aria-label="Удалить"></button>
     </article>
   </template>
-  <script src="./scripts/index.js" type="module"></script>
 
 </body>
 
