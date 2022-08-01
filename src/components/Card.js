@@ -1,7 +1,9 @@
 class Card {
-    constructor(configCard, cardPopupData) {
+    constructor(configCard, item, cardPopupData) {
         this._config = configCard,
-        this._cardPopupData = cardPopupData
+        this._cardPopupData = cardPopupData,
+        this._itemName = item.name,
+        this._itemImage = item.link
     }
     _getTemplate() {
         return document.querySelector(this._config.template)
@@ -20,19 +22,20 @@ class Card {
 
     _deleteCard() {
         this._view.remove();
-    }
+        this._view = null;
+    } 
 
     _like() {
         this._likeButton.classList.toggle(this._config.cardIsLiked);
     }
 
-    createCard(item) {
+    createCard() {
         this._view = this._getTemplate();
         this._cardName = this._view.querySelector(this._config.cardName); 
-        this._cardName.textContent = item.name; 
+        this._cardName.textContent = this._itemName; 
         this._cardImage = this._view.querySelector(this._config.cardImage);
-        this._cardImage.src = item.link;
-        this._cardImage.alt = item.name;
+        this._cardImage.src = this._itemImage;
+        this._cardImage.alt = this._itemName;
         this._addEventListeners();
         return this._view;
     }

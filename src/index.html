@@ -13,13 +13,13 @@
   <div class="page">
 
     <header class="header">
-      <img src="<%=require('../images/header-logo.svg')%>" alt="Лого" class="header__logo">
+      <img src="<%=require('../src/images/header-logo.svg')%>" alt="Лого" class="header__logo">
     </header>  
 
     <main class="content">
 
       <section class="profile">
-        <div class="profile__avatar" style="background-image: url(<%=require('../images/avatar.jpg')%>);"></div>
+        <div class="profile__avatar" style="background-image: url(<%=require('../src/images/avatar.jpg')%>);"></div>
         <div class="profile__profile-info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <p class="profile__description">Исследователь океана</p>
@@ -53,16 +53,16 @@
           <h3 class="popup__title">Новое место</h3>
           <form class="popup__form popup__form_type_new-card" action="/" name="place-info" novalidate>
             <input type="text" id="popup__input_type_place" class="popup__input popup__input_type_place"
-              name="place-name" placeholder="Название" required minlength="2" maxlength="30">
+              name="name" placeholder="Название" required minlength="2" maxlength="30">
             <span id="popup__input_type_place-error" class="popup__error"></span>
-            <input type="url" id="popup__input_type_link" class="popup__input popup__input_type_link" name="place-link"
+            <input type="url" id="popup__input_type_link" class="popup__input popup__input_type_link" name="link"
               placeholder="Ссылка на картинку" required>
             <span id="popup__input_type_link-error" class="popup__error"></span>
             <button type="submit" class="popup__button">Сохранить</button>
           </form>
           <button class="popup__close-icon" type="button" aria-label="Закрыть"></button>
         </div>
-      </div>
+      </div> 
 
       <div class="popup popup_type_zoom">
         <div class="popup__zoom">

@@ -1,8 +1,8 @@
 class Section {
-    constructor(objects, list) {
+    constructor(objects, cardListSelector) {
         this._items = objects.items,
         this._function = objects.renderer,
-        this._list = list
+        this._cardListSelector = cardListSelector
     }
 
     renderer() {
@@ -13,8 +13,8 @@ class Section {
     }
 
     addItem(card) {
-        this._list.prepend(card);
+        this._cardListSelector.prepend(card);
     }
 }
 
-export default Section;
+export default Section; 

@@ -1,18 +1,18 @@
-import "../pages/index.css"
-import initialCards from "./initialCards.js";
-import Card from "./Card.js";
-import FormValidator from "./FormValidator.js";
-import Section from "./Section.js";
-import PopupWithImage from "./PopupWithImage.js";
-import PopupWithForm from "./PopupWithForm.js";
-import UserInfo from "./UserInfo.js";
+import "./index.css"
+import initialCards from "../components/initialCards.js";
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
+import Section from "../components/Section.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
 
 //ПЕРЕМЕННЫЕ
 
 const configCard = {
     template: '.element-template',
     templateItem: '.elements__item',
-    cardList: '.elements',
+    cardListSelector: '.elements',
     cardName: '.elements__place-name',
     cardImage: '.elements__image',
     cardDeleteButton: '.elements__delete-icon',
@@ -20,11 +20,13 @@ const configCard = {
     cardIsLiked: 'elements__heart-icon_liked',
     cardPopup: '.popup_type_zoom',
     popup: 'popup',
+    popupForm: '.popup__form',
     popupPlace: '.popup_type_place',
     popupIsOpened: 'popup_opened',
     popupImage: '.popup__image',
     popupCaption: '.popup__caption',
     popupCloseIcons: '.popup__close-icon',
+    popupInput: '.popup__input',
     popupInputPlaceName: '.popup__input_type_place',
     popupInputPlaceLink: '.popup__input_type_link',
     popupProfile: '.popup_type_profile',
@@ -49,8 +51,10 @@ const configValid = {
 
 const cardPopup = document.querySelector(configCard.cardPopup);
 const popupPlace = document.querySelector(configCard.popupPlace);
-const cardList = document.querySelector(configCard.cardList);
+const cardListSelector = document.querySelector(configCard.cardListSelector);
 const popupProfile = document.querySelector(configCard.popupProfile);
+const profileName = document.querySelector(configCard.profileName);
+const profileDescription = document.querySelector(configCard.profileDescription);
 const profileEditButton = document.querySelector(configCard.profileEditButton);
 const cardAddButton = document.querySelector(configCard.cardAddButton);
 const popupFormProfile = document.querySelector(configCard.popupFormProfile);
@@ -65,40 +69,48 @@ profileValidation.enableValidation();
 newCardValidation.enableValidation();  
 
 //Открытие/Закрытие попапа профиля
-const popup = new UserInfo (popupProfile, configCard);
+const userInfoSelectors = {
+    profile: profileName,
+    description: profileDescription
+}
+const popupUserInfo = new UserInfo (userInfoSelectors, popupProfile, configCard);
+popupUserInfo.setEventListeners();
+
 function openProfilePopup() {
     profileValidation.resetValidation();
-    popup.getUserInfo();
-    popup.open();
+    popupUserInfo.setUserInfo();
+    popupUserInfo.open();
 };
 
 //Создание попапа с изображением
+const popupWithImage = new PopupWithImage(cardPopup, configCard);
+popupWithImage.setEventListeners();
+
 function handleCardClick(data) {
-    const popup = new PopupWithImage(data, cardPopup, configCard);
-    popup.open();
+    popupWithImage.open(data);
 };
 
 //Создание карточки
 function createNew(item) {
-const card = new Card(configCard, handleCardClick);
-return card.createCard(item);
+const card = new Card(configCard, item, handleCardClick);
+return card.createCard();
 }
-
+ 
 //Добавление карточек из коробки
 const initialObjects = {
     items: initialCards,
     renderer: createNew
 }
-const section = new Section(initialObjects, cardList);
+const section = new Section(initialObjects, cardListSelector);
 section.renderer();
 
 const popupCard = new PopupWithForm (popupPlace, addCard, configCard);
+popupCard.setEventListeners();
 
 //Открытие/Закрытие попапа карточки
 function openNewCardPopup() {
     newCardValidation.resetValidation();
     popupCard.open();
-
 };
 
 //Добавление новой карточки из формы
