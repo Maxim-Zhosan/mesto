@@ -1,5 +1,5 @@
 import "./index.css"
-import initialCards from "../components/initialCards.js";
+import initialCards from "../utils/initialCards.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
@@ -49,12 +49,6 @@ const configValid = {
     errorClass: 'popup__error_visible'
 }
 
-const cardPopup = document.querySelector(configCard.cardPopup);
-const popupPlace = document.querySelector(configCard.popupPlace);
-const cardListSelector = document.querySelector(configCard.cardListSelector);
-const popupProfile = document.querySelector(configCard.popupProfile);
-const profileName = document.querySelector(configCard.profileName);
-const profileDescription = document.querySelector(configCard.profileDescription);
 const profileEditButton = document.querySelector(configCard.profileEditButton);
 const cardAddButton = document.querySelector(configCard.cardAddButton);
 const popupFormProfile = document.querySelector(configCard.popupFormProfile);
@@ -69,21 +63,28 @@ profileValidation.enableValidation();
 newCardValidation.enableValidation();  
 
 //Открытие/Закрытие попапа профиля
-const userInfoSelectors = {
-    profile: profileName,
-    description: profileDescription
-}
-const popupUserInfo = new UserInfo (userInfoSelectors, popupProfile, configCard);
+const userInfoSelectors = { 
+    profile: '.profile__name', 
+    description: '.profile__description' 
+} 
+
+const userInfo = new UserInfo (userInfoSelectors, configCard);
+
+const popupUserInfo = new PopupWithForm ('.popup_type_profile', changeUserInfo, configCard);
 popupUserInfo.setEventListeners();
 
 function openProfilePopup() {
     profileValidation.resetValidation();
-    popupUserInfo.setUserInfo();
+    userInfo.getUserInfo();
     popupUserInfo.open();
 };
 
+function changeUserInfo(item) {
+    userInfo.setUserInfo(item);
+} 
+
 //Создание попапа с изображением
-const popupWithImage = new PopupWithImage(cardPopup, configCard);
+const popupWithImage = new PopupWithImage('.popup_type_zoom', configCard);
 popupWithImage.setEventListeners();
 
 function handleCardClick(data) {
@@ -101,10 +102,10 @@ const initialObjects = {
     items: initialCards,
     renderer: createNew
 }
-const section = new Section(initialObjects, cardListSelector);
+const section = new Section(initialObjects, '.elements');
 section.renderer();
 
-const popupCard = new PopupWithForm (popupPlace, addCard, configCard);
+const popupCard = new PopupWithForm ('.popup_type_place', addCard, configCard);
 popupCard.setEventListeners();
 
 //Открытие/Закрытие попапа карточки

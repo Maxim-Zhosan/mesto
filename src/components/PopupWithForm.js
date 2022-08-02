@@ -4,11 +4,11 @@ class PopupWithForm extends Popup {
     constructor(popupSelector, submitFunction, configCard) {
         super(popupSelector, configCard),
         this._submitFunction = submitFunction,
-        this._popupForm = this._popupSelector.querySelector(configCard.popupForm)
+        this._popupForm = this._popup.querySelector(configCard.popupForm),
+        this._inputList = this._popupForm.querySelectorAll(this._config.popupInput); 
     }
 
     _getInputValues() {
-        this._inputList = this._popupSelector.querySelectorAll(this._config.popupInput);
         this._formValues = {};
         this._inputList.forEach(input => {
             this._formValues[input.name] = input.value;
@@ -24,7 +24,7 @@ class PopupWithForm extends Popup {
     }
 
     setEventListeners() {
-        this._popupSelector.addEventListener('submit', this._submit);
+        this._popup.addEventListener('submit', this._submit);
         super.setEventListeners();
     }
 
