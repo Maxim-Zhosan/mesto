@@ -53,6 +53,8 @@ const profileEditButton = document.querySelector(configCard.profileEditButton);
 const cardAddButton = document.querySelector(configCard.cardAddButton);
 const popupFormProfile = document.querySelector(configCard.popupFormProfile);
 const popupFormNewCard = document.querySelector(configCard.popupFormNewCard);
+const profileNameInput = document.querySelector(configCard.profileNameInput);
+const profileJobInput = document.querySelector(configCard.profileJobInput);
 
 //ФУНКЦИИ
 
@@ -75,7 +77,9 @@ popupUserInfo.setEventListeners();
 
 function openProfilePopup() {
     profileValidation.resetValidation();
-    userInfo.getUserInfo();
+    const userData = userInfo.getUserInfo();
+    profileNameInput.value = userData.profileName; 
+    profileJobInput.value = userData.profileJob; 
     popupUserInfo.open();
 };
 

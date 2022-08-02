@@ -2,9 +2,7 @@ class UserInfo {
     constructor(userInfoSelectors, configCard) {
             this._config = configCard,
             this._userName = document.querySelector(userInfoSelectors.profile),
-            this._description = document.querySelector(userInfoSelectors.description),
-            this._inputName = document.querySelector(this._config.profileNameInput),
-            this._inputDescription = document.querySelector(this._config.profileJobInput)
+            this._description = document.querySelector(userInfoSelectors.description)
     }
 
     setUserInfo(item) {
@@ -13,8 +11,10 @@ class UserInfo {
     }
 
     getUserInfo() {
-        this._inputName.value = this._userName.textContent;
-        this._inputDescription.value = this._description.textContent;
+        return { 
+            profileName: this._userName.textContent, 
+            profileJob: this._description.textContent, 
+          }; 
     }
 
 }
