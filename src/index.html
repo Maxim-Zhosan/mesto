@@ -14,15 +14,15 @@
 
     <header class="header">
       <img src="<%=require('../src/images/header-logo.svg')%>" alt="Лого" class="header__logo">
-    </header>  
+    </header>
 
     <main class="content">
 
       <section class="profile">
-        <div class="profile__avatar" style="background-image: url(<%=require('../src/images/avatar.jpg')%>);"></div>
+        <div class="profile__avatar"></div>
         <div class="profile__profile-info">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <p class="profile__description">Исследователь океана</p>
+          <h1 class="profile__name"></h1>
+          <p class="profile__description"></p>
         </div>
         <button class="profile__edit-button" type="button" aria-label="Редактировать профиль"></button>
         <button class="profile__add-button" type="button" aria-label="Добавить карточку"></button>
@@ -36,10 +36,10 @@
         <div class="popup__content">
           <h3 class="popup__title">Редактировать профиль</h3>
           <form class="popup__form popup__form_type_profile" action="/" name="profile-info" novalidate>
-            <input type="text" id="popup__input_type_name" class="popup__input popup__input_type_name"
-              name="profileName" placeholder="Имя" required minlength="2" maxlength="40">
+            <input type="text" id="popup__input_type_name" class="popup__input popup__input_type_name" name="name"
+              placeholder="Имя" required minlength="2" maxlength="40">
             <span id="popup__input_type_name-error" class="popup__error"></span>
-            <input type="text" id="popup__input_type_job" class="popup__input popup__input_type_job" name="profileJob"
+            <input type="text" id="popup__input_type_job" class="popup__input popup__input_type_job" name="about"
               placeholder="Призвание" required minlength="2" maxlength="200">
             <span id="popup__input_type_job-error" class="popup__error"></span>
             <button type="submit" class="popup__button">Сохранить</button>
@@ -52,8 +52,8 @@
         <div class="popup__content">
           <h3 class="popup__title">Новое место</h3>
           <form class="popup__form popup__form_type_new-card" action="/" name="place-info" novalidate>
-            <input type="text" id="popup__input_type_place" class="popup__input popup__input_type_place"
-              name="name" placeholder="Название" required minlength="2" maxlength="30">
+            <input type="text" id="popup__input_type_place" class="popup__input popup__input_type_place" name="name"
+              placeholder="Название" required minlength="2" maxlength="30">
             <span id="popup__input_type_place-error" class="popup__error"></span>
             <input type="url" id="popup__input_type_link" class="popup__input popup__input_type_link" name="link"
               placeholder="Ссылка на картинку" required>
@@ -62,7 +62,15 @@
           </form>
           <button class="popup__close-icon" type="button" aria-label="Закрыть"></button>
         </div>
-      </div> 
+      </div>
+
+      <div class="popup popup_type_delete-card">
+        <div class="popup__content">
+          <h3 class="popup__title popup__title_type_confirmation">Вы уверены?</h3>
+          <button type="button" class="popup__button" aria-label="Подтвердить удаление">Да</button>
+          <button class="popup__close-icon" type="button" aria-label="Закрыть"></button>
+        </div>
+      </div>
 
       <div class="popup popup_type_zoom">
         <div class="popup__zoom">
@@ -86,8 +94,11 @@
     <article class="elements__item">
       <img src="/" alt="" class="elements__image">
       <div class="elements__place-name-box">
-        <h2 class="elements__place-name"> </h2>
-        <button class="elements__heart-icon" type="button" aria-label="Лайк"></button>
+        <h2 class="elements__place-name"></h2>
+        <div class="elements__likes-place">
+          <button class="elements__heart-icon" type="button" aria-label="Лайк"></button>
+          <p class="elements__likes-number"></p>
+        </div>
       </div>
       <button class="elements__delete-icon" type="button" aria-label="Удалить"></button>
     </article>

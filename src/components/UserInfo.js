@@ -1,22 +1,28 @@
 class UserInfo {
     constructor(userInfoSelectors, configCard) {
             this._config = configCard,
-            this._userName = document.querySelector(userInfoSelectors.profile),
-            this._description = document.querySelector(userInfoSelectors.description)
+            this._name = document.querySelector(userInfoSelectors.name),
+            this._about = document.querySelector(userInfoSelectors.about),
+            this._avatar = document.querySelector(userInfoSelectors.avatar)
     }
 
-    setUserInfo(item) {
-        this._userName.textContent = item.profileName;
-        this._description.textContent = item.profileJob;
+    setUserInfo(result) {
+        this._name.textContent = result.name;
+        this._about.textContent = result.about;
+        this._avatar.style = `background-image: url(${result.avatar})`;
+        this._id = result._id;
     }
 
     getUserInfo() {
         return { 
-            profileName: this._userName.textContent, 
-            profileJob: this._description.textContent, 
+            name: this._name.textContent, 
+            about: this._about.textContent
           }; 
     }
 
+    checkUserId() {
+        return this._id;
+    }
 }
 
 export default UserInfo;

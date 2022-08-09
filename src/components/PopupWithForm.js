@@ -18,8 +18,8 @@ class PopupWithForm extends Popup {
 
     _submit = (event) => {
         event.preventDefault();
-        this._items = this._getInputValues();
-        this._submitFunction(this._items);
+        this._data = this._getInputValues();
+        this._submitFunction(this._data);
         this.close();
     }
 

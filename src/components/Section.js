@@ -1,13 +1,14 @@
 class Section {
-    constructor(objects, cardListSelector) {
-        this._items = objects.items,
-        this._function = objects.renderer,
+    
+    constructor(renderFunction, cardListSelector) {
+        this._function = renderFunction,
         this._cardListSelector = document.querySelector(cardListSelector)
     }
 
-    renderer() {
-        this._items.forEach(item => {
-            const card = this._function(item);
+    renderer(userId, objects) {
+        let objectsReversed = objects.map(objects.pop, [...objects]);
+        objectsReversed.forEach(item => {
+            const card = this._function(userId, item);
             this.addItem(card);
         })
     }
