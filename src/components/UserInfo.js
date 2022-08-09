@@ -9,6 +9,7 @@ class UserInfo {
     setUserInfo(result) {
         this._name.textContent = result.name;
         this._about.textContent = result.about;
+        this._avatarLink = result.avatar;
         this._avatar.style = `background-image: url(${result.avatar})`;
         this._id = result._id;
     }
@@ -16,7 +17,8 @@ class UserInfo {
     getUserInfo() {
         return { 
             name: this._name.textContent, 
-            about: this._about.textContent
+            about: this._about.textContent,
+            avatar: this._avatarLink
           }; 
     }
 

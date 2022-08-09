@@ -24,6 +24,7 @@ const configCard = {
     popup: 'popup',
     popupForm: '.popup__form',
     popupPlace: '.popup_type_place',
+    popupAvatar: '.popup_type_avatar',
     popupIsOpened: 'popup_opened',
     popupImage: '.popup__image',
     popupCaption: '.popup__caption',
@@ -34,12 +35,15 @@ const configCard = {
     popupProfile: '.popup_type_profile',
     profileNameInput: '.popup__input_type_name',
     profileJobInput: '.popup__input_type_job',
+    profileAvatarInput: '.popup__input_type_avatar-link',
     profileName: '.profile__name',
     profileDescription: '.profile__description',
     profileEditButton: '.profile__edit-button',
     cardAddButton: '.profile__add-button',
+    avatarEditButton: '.profile__avatar',
     popupFormProfile: '.popup__form_type_profile',
     popupFormNewCard: '.popup__form_type_new-card',
+    popupFormNewAvatar: '.popup__form_type_new-avatar',
     popupDeleteCard: '.popup_type_delete-card'
 }
 
@@ -59,18 +63,23 @@ const configServer = {
 
 const profileEditButton = document.querySelector(configCard.profileEditButton);
 const cardAddButton = document.querySelector(configCard.cardAddButton);
+const avatarEditButton = document.querySelector(configCard.avatarEditButton);
 const popupFormProfile = document.querySelector(configCard.popupFormProfile);
 const popupFormNewCard = document.querySelector(configCard.popupFormNewCard);
+const popupFormNewAvatar = document.querySelector(configCard.popupFormNewAvatar);
 const profileNameInput = document.querySelector(configCard.profileNameInput);
 const profileJobInput = document.querySelector(configCard.profileJobInput);
+const profileAvatarInput = document.querySelector(configCard.profileAvatarInput);
 
 //ФУНКЦИИ
 
 //Валидация форм
 const profileValidation = new FormValidator(configValid, popupFormProfile);
 const newCardValidation = new FormValidator(configValid, popupFormNewCard);
+const newAvatarValidation = new FormValidator(configValid, popupFormNewAvatar);
 profileValidation.enableValidation();
 newCardValidation.enableValidation();
+newAvatarValidation.enableValidation();
 
 //Создание попапа с изменением информации о профиле
 const userInfoSelectors = {
@@ -86,19 +95,15 @@ const popupUserInfo = new PopupWithForm(configCard.popupProfile, changeUserInfo,
 popupUserInfo.setEventListeners();
 const popupCard = new PopupWithForm(configCard.popupPlace, addCard, configCard);
 popupCard.setEventListeners();
+const popupAvatar = new PopupWithForm(configCard.popupAvatar, changeAvatar, configCard);
+popupAvatar.setEventListeners();
 const popupWithImage = new PopupWithImage(configCard.cardPopup, configCard);
 popupWithImage.setEventListeners();
 const popupDeleteCard = new PopupWithConfirmation(configCard.popupDeleteCard, deleteCard, configCard, configValid.submitButtonSelector);
 popupDeleteCard.setEventListeners();
 
-//Загрузка информации о пользователе
-function setUserInfo() {
-    return api.getUserInformation()
-        .then((res) => { userInfo.setUserInfo(res) })
-        .catch((err) => console.log(err))
-};
 
-//Добавление карточек из коробки
+//Загрузка сайта
 function addCardsFromServer() {
     Promise.all([
         api.getUserInformation(),
@@ -119,12 +124,6 @@ function handleCardClick(data) {
     popupWithImage.open(data);
 };
 
-//Попап-удаления карточки
-function handleCardDelete(id, card) {
-    popupDeleteCard.data(id, card);
-    popupDeleteCard.open();
-}
-
 //Открытие/Закрытие попапа профиля
 function openProfilePopup() {
     profileValidation.resetValidation();
@@ -136,9 +135,24 @@ function openProfilePopup() {
 
 // Изменение информации о пользователе
 function changeUserInfo(data) {
-    api.changeUserInformation(data)
-        .then(setUserInfo())
+    return api.changeUserInformation(data)
+        .then((res) => { userInfo.setUserInfo(res) })
         .catch((err) => console.log(err))
+};
+
+// Изменение аватара
+function changeAvatar(data) {
+    return api.changeAvatar(data)
+        .then((res) => { userInfo.setUserInfo(res) })
+        .catch((err) => console.log(err))
+};
+
+//Открытие/Закрытие попапа изменения аватара
+function openNewAvatarPopup() {
+    newAvatarValidation.resetValidation();
+    const userData = userInfo.getUserInfo();
+    profileAvatarInput.value = userData.avatar;
+    popupAvatar.open();
 };
 
 //Открытие/Закрытие попапа добавления новой карточки
@@ -165,6 +179,12 @@ function addCard(item) {
         .catch((err) => console.log(err));
 }
 
+//Попап-удаления карточки
+function handleCardDelete(id, card) {
+    popupDeleteCard.data(id, card);
+    popupDeleteCard.open();
+}
+
 //Удаление карточки
 function deleteCard(id, card) {
     return api.deleteCardFromServer(id)
@@ -178,13 +198,16 @@ function deleteCard(id, card) {
 function setLike(id, like) {
     if (like === true) {
         return api.deleteLike(id)
-
+        .catch((err) => console.log(err));
     } else {
         return api.addLike(id)
+        .catch((err) => console.log(err));
     }
+
 }
 
 //ОБРАБОТЧИКИ
 
 profileEditButton.addEventListener('click', () => openProfilePopup());
 cardAddButton.addEventListener('click', () => openNewCardPopup());
+avatarEditButton.addEventListener('click', () => openNewAvatarPopup());

@@ -35,6 +35,20 @@ class Api {
             .then(res => this._getJsonOrError(res))
     }
 
+    changeAvatar(data) {
+        return fetch(`${this._host}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: {
+                authorization: this._token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                avatar: data.avatar
+            })
+        })
+            .then(res => this._getJsonOrError(res))
+    }
+
     getUserInformation() {
         return fetch(`${this._host}/users/me`, {
             headers: {
