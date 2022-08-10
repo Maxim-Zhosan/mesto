@@ -21,12 +21,7 @@ class PopupWithForm extends Popup {
         event.preventDefault();
         this._data = this._getInputValues();
         this.loading(true, "Сохранение...");
-        this._submitFunction(this._data)
-        .then(() => {
-            this.loading(false, "Сохранить"),
-            this.close()
-        })
-        .catch((err) => console.log(err));
+        this._submitFunction(this._data, this)
     }
 
     setEventListeners() {
@@ -40,7 +35,6 @@ class PopupWithForm extends Popup {
     }
 
     loading(status, buttonText) {
-        const baseText = this._submitButton.textContent
         if (status === true) {
             this._submitButton.textContent = buttonText;
             this._submitButton.setAttribute("disabled", "disabled");

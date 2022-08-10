@@ -103,6 +103,7 @@ popupWithImage.setEventListeners();
 const popupDeleteCard = new PopupWithConfirmation(configCard.popupDeleteCard, deleteCard, configCard, configValid.submitButtonSelector);
 popupDeleteCard.setEventListeners();
 
+let userID
 
 //Загрузка сайта
 function addCardsFromServer() {
@@ -112,7 +113,8 @@ function addCardsFromServer() {
     ])
         .then(([userData, items]) => {
             section.renderer(userData._id, items),
-                userInfo.setUserInfo(userData)
+                userInfo.setUserInfo(userData),
+                userID = userData._id
         })
         .catch((err) => console.log(err));
 }
@@ -133,9 +135,13 @@ function openProfilePopup() {
 };
 
 // Изменение информации о пользователе
-function changeUserInfo(data) {
+function changeUserInfo(data, popup) {
     return api.changeUserInformation(data)
-        .then((res) => { userInfo.setUserInfo(res) })
+        .then((res) => { 
+            userInfo.setUserInfo(res) 
+            popup.loading(false, "Сохранить"),
+            popup.close()
+        })
         .catch((err) => console.log(err))
 };
 
@@ -168,12 +174,9 @@ function createNew(userId, item) {
 
 //Добавление новой карточки из формы
 function addCard(item) {
-    return Promise.all([
-        api.getUserInformation(),
-        api.addNewCard(item)
-    ])
-        .then(([userData, item]) => {
-            section.addItem(createNew(userData._id, item))
+    return api.addNewCard(item)
+        .then((item) => {
+            section.addItem(createNew(userID, item))
         })
         .catch((err) => console.log(err));
 }
@@ -187,22 +190,21 @@ function handleCardDelete(id, card) {
 //Удаление карточки
 function deleteCard(id, card) {
     return api.deleteCardFromServer(id)
-        .then(
-            card.remove(),
-            card = null
-        )
+        .then(card.deleteElement())
         .catch((err) => console.log(err));
 }
 //Лайк 
-function setLike(id, like) {
+function setLike(id, userId, likes, object) {
+    const like = likes.some(item => item._id === userId)
     if (like === true) {
         return api.deleteLike(id)
+        .then((res) => object.setLikes(res))
         .catch((err) => console.log(err));
     } else {
         return api.addLike(id)
+        .then((res) => object.setLikes(res))
         .catch((err) => console.log(err));
     }
-
 }
 
 //ОБРАБОТЧИКИ

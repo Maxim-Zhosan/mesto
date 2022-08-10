@@ -6,7 +6,7 @@ class Section {
     }
 
     renderer(userId, objects) {
-        let objectsReversed = objects.map(objects.pop, [...objects]);
+        const objectsReversed = objects.map(objects.pop, [...objects]);
         objectsReversed.forEach(item => {
             const card = this._function(userId, item);
             this.addItem(card);
