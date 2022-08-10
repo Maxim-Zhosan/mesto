@@ -5,7 +5,8 @@ class PopupWithForm extends Popup {
         super(popupSelector, configCard),
         this._submitFunction = submitFunction,
         this._popupForm = this._popup.querySelector(configCard.popupForm),
-        this._inputList = this._popupForm.querySelectorAll(this._config.popupInput); 
+        this._inputList = this._popupForm.querySelectorAll(this._config.popupInput),
+        this._submitButton = this._popup.querySelector(configCard.submitButtonSelector)
     }
 
     _getInputValues() {
@@ -19,8 +20,13 @@ class PopupWithForm extends Popup {
     _submit = (event) => {
         event.preventDefault();
         this._data = this._getInputValues();
-        this._submitFunction(this._data);
-        this.close();
+        this.loading(true, "Сохранение...");
+        this._submitFunction(this._data)
+        .then(() => {
+            this.loading(false, "Сохранить"),
+            this.close()
+        })
+        .catch((err) => console.log(err));
     }
 
     setEventListeners() {
@@ -31,6 +37,18 @@ class PopupWithForm extends Popup {
     close() {
         this._popupForm.reset();
         super.close();
+    }
+
+    loading(status, buttonText) {
+        const baseText = this._submitButton.textContent
+        if (status === true) {
+            this._submitButton.textContent = buttonText;
+            this._submitButton.setAttribute("disabled", "disabled");
+        }
+        else {
+            this._submitButton.textContent = buttonText;
+            this._submitButton.removeAttribute("disabled");
+        }
     }
 
 }

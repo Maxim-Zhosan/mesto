@@ -41,6 +41,7 @@ const configCard = {
     profileEditButton: '.profile__edit-button',
     cardAddButton: '.profile__add-button',
     avatarEditButton: '.profile__avatar',
+    submitButtonSelector: '.popup__button',
     popupFormProfile: '.popup__form_type_profile',
     popupFormNewCard: '.popup__form_type_new-card',
     popupFormNewAvatar: '.popup__form_type_new-avatar',
@@ -111,9 +112,7 @@ function addCardsFromServer() {
     ])
         .then(([userData, items]) => {
             section.renderer(userData._id, items),
-                userInfo.setUserInfo(userData),
-                console.log(items),
-                console.log(userData)
+                userInfo.setUserInfo(userData)
         })
         .catch((err) => console.log(err));
 }
@@ -169,7 +168,7 @@ function createNew(userId, item) {
 
 //Добавление новой карточки из формы
 function addCard(item) {
-    Promise.all([
+    return Promise.all([
         api.getUserInformation(),
         api.addNewCard(item)
     ])
