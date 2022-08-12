@@ -138,18 +138,26 @@ function openProfilePopup() {
 function changeUserInfo(data, popup) {
     return api.changeUserInformation(data)
         .then((res) => { 
-            userInfo.setUserInfo(res) 
-            popup.loading(false, "Сохранить"),
+            userInfo.setUserInfo(res), 
             popup.close()
         })
         .catch((err) => console.log(err))
+        .finally(() => {
+            popup.loading(false, "Сохранить")
+        })
 };
 
 // Изменение аватара
-function changeAvatar(data) {
+function changeAvatar(data, popup) {
     return api.changeAvatar(data)
-        .then((res) => { userInfo.setUserInfo(res) })
+        .then((res) => { 
+            userInfo.setUserInfo(res),
+            popup.close()
+         })
         .catch((err) => console.log(err))
+        .finally(() => {
+            popup.loading(false, "Сохранить")
+        })
 };
 
 //Открытие/Закрытие попапа изменения аватара
@@ -173,12 +181,16 @@ function createNew(userId, item) {
 }
 
 //Добавление новой карточки из формы
-function addCard(item) {
+function addCard(item, popup) {
     return api.addNewCard(item)
         .then((item) => {
-            section.addItem(createNew(userID, item))
+            section.addItem(createNew(userID, item)),
+            popup.close()
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
+        .finally(() => {
+            popup.loading(false, "Сохранить")
+        })
 }
 
 //Попап-удаления карточки
